@@ -7,5 +7,5 @@
 
 # 3.Hafta Ödevi İçin;
 
-1. Birinci çalışma için linke[https://github.com/Kodluyoruz51BootcampMVCCore/iii-hafta-odevi-ZeynepAkdemr/blob/master/Hafta3/ara%C5%9Ft%C4%B1rma.adoc] tıklayın.
-2. İkinci çalışma için linke[https://github.com/Kodluyoruz51BootcampMVCCore/iii-hafta-odevi-ZeynepAkdemr/blob/master/Hafta3/ara%C5%9Ft%C4%B1rma2.adoc] tıklayın.
+1. Birinci çalışma için linke [https://github.com/Kodluyoruz51BootcampMVCCore/iii-hafta-odevi-ZeynepAkdemr/blob/master/Hafta3/ara%C5%9Ft%C4%B1rma.adoc] tıklayın.
+2. İkinci çalışma için linke [https://github.com/Kodluyoruz51BootcampMVCCore/iii-hafta-odevi-ZeynepAkdemr/blob/master/Hafta3/ara%C5%9Ft%C4%B1rma2.adoc] tıklayın.
