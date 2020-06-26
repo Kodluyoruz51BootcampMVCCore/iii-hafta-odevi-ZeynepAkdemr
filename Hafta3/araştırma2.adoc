@@ -1,0 +1,146 @@
+== C# Extension Metot
+
+elime anlamı genişletilebilir metod olan Extension Method'lar C#3.0 ile hayatımıza girmiştir ve yaptığı iş itibatiyle kullanım açısından son derece faydalı metodlardır. Tek cümleyle özetlemek gerekirse class ve struct yapılarını modify etmeden ilgili struct yada class'için extension metodlar eklememizi sağlar.
+
+.Extesion metod yazarken uymamız gereken bir kaç kural vardır. Bunlar;
+
+* Extension metodlar static bir class içerisinde static olarak tanımlanmalıdır. 
+* Extend edilecek class ilgili extension metoda metodun ilk parametresi olarak verilip önünde this keyword'ü ile tanımlanmalıdır.
+* Extension metod da tanımlı parametrelerden sadece 1 tanesi this keyword'ü ile tanımlanır.
+
+Örnek olarak bir tane extension metodumuz var ve bu metod integer bir değer alıp asal mı değil mi diye kontrol etsin.
+
+[source,C#]
+----
+public static class MyExtensions
+   {
+       public static bool IsPrime(this int integer)
+       {
+           return true;
+       }
+   }
+----
+
+Yazdığımız metodu aşağıdaki görselde olduğu gibi kullanmak istediğimizde int tanımlı değişkenin adı"." nokta dediğimizde extensionMetod'u intellisense de görebileceğiz. 
+
+image::4.png[]
+
+[source,C#]
+----
+class Program
+{
+    static void Main(string[] args)
+    {
+        int anyNumber = 123456;
+        if(anyNumber.IsPrime())
+        {
+            //asal sayı
+        }
+        else
+        {
+            //asal sayı değil
+        }
+    }
+}
+----
+
+Yukarıda ki örnekte int tipini baz alarak ilerledim ancak ihtiyaç dahilinde bütün tipler ve kendi tanımladığımız objeler içinde extension metodlar yazabiliriz.
+
+Yine örnek olarak ; bir Person class'ımız ver ve içerisinde DateTime tipinde ismi BirthDate olan bir property olsun. Bir tane GetBirthDate adında extension metod tanımlayalım ve bu metod bize parametre olarak aldığı Person objesinde bulunan BirthDate alanını return ettirsin.
+
+[source,C#]
+----
+public class Person
+{
+    public string FullName {get;set;}
+    public DateTime BirthDate {get;set;}
+}
+ 
+public static class MyExtensions
+{
+    public static DateTime GetBirthDate(this Person prs)
+    {
+            return prs.BirthDate;
+    }
+}
+----
+
+Metot kısmı;
+
+[source,C#]
+----
+using System;
+                     
+class Program
+{
+    static void Main(string[] args)
+    {
+        Person prs=new Person();
+        DateTime bDAte = prs.GetBirthDate();
+    }
+}
+----
+
+Görüldüğü gibi Extension metod kullanım alanımızı ihtiyaca göre genişletip metodlarımızı istediğimiz yerde "." nokta diyerek çekilebilir.
+
+== Extension Paket Yükleme
+
+Uzatma Paketi, birlikte yüklenebilen bir uzantı kümesidir. Uzantı Paketleri, en sevdiğiniz uzantıları diğer kullanıcılarla kolayca paylaşmanızı veya belirli bir senaryo için bir dizi uzantıyı bir araya toplamanızı sağlar.
+
+Visual Studio 2015'ten itibaren Visual Studio SDK, Visual Studio kurulumunda isteğe bağlı bir özellik olarak yer almaktadır. VS SDK'yı daha sonra da yükleyebilirsiniz.
+
+Uzatma Paketi özelliği Visual Studio 15.8 Preview 2'den başlayarak kullanılabilir.
+
+Uzantı Paketi öğesi şablonu, birlikte yüklenebilen uzantılar kümesine sahip bir Uzantı Paketi oluşturur.
+
+. Yeni Proje iletişim kutusunda "vsix" araması yapın ve VSIX Project'iseçin. Proje adı için"Test Uzantı Paketi" yazın. Oluştur'useçin.
+. Çözüm Gezgini'ndeproje düğümüne sağ tıklayın veYeni Öğe Ekle'yi > seçin. Visual C# Genişletilebilirlik düğümüne gidin ve Uzantı Paketi'niseçin. Varsayılan dosya adını bırakın (ExtensionPack1.cs).
+. ExtensionPack1.vsext dosyası aşağıdaki kodu içeren eklenir.
+
+[source, json]
+----
+{
+ "id": "ExtensionPack1",
+ "name": "ExtensionPack1",
+ "description": "Read about creating extension packs at https://aka.ms/vsextpack",
+ "version": "1.0.0.0",
+ "extensions": [  // List of extensions that are included in the Extension Pack.
+   {
+     "vsixId": "41858b2d-ff0b-4a43-80b0-f1b2d6084935", // The vsix id of the extension you want to   include.
+     "name": "AlignAssignments"
+   },
+   {
+       "vsixId": "42374550-426a-400e-96f9-237682e8dea6",
+     "name": "CopyAsHtml"
+   }
+ ]
+}
+----
+5.Uzatma Paketi'ne dahil etmek için uzantı vsixid Visual Studio Marketplacebulunabilir. Eklemek istediğiniz uzantıyı bulun ve Kimliği Kopyala'yatıklayın. Yukarıdaki dosyadaki mevcut vsixId'i güncelleyebilir veya listeye başka bir uzantı ekleyebilirsiniz.
+
+image::5.png[]
+
+Projeyi oluşturun ve uzantınızı Market'e yükleyin
+
+NOTE: Uzatma paketi yalnızca Visual Studio Marketplace veya Private gallery'debulunan uzantıları yükleyebilir.
+
+==== Uzatma Paketini Marketten Yükleme
+
+. Visual Studio'da, Uzantılar menüsünde Yönetilen Uzantılar'ıtıklatın.
+. Çevrimiçi'yi tıklatın ve ardından "Test Uzatma Paketi"ni arayın.
+. İndir'itıklatın. Uzantı paketive uzantılistesi daha sonra yüklemek için zamanlanır.
+. Aşağıda, Uzantıları Yönet iletişim kutusunun örnek bir Uzantı Paketi indirme görünümü verilmiştir.
+. Uzantı paketine yalnızca bazı uzantıları yüklemeyi tercih ederseniz, Zamanlanmış Yükleme içinuzantı listesini değiştirebilirsiniz.
+
+image::6.png[]
+
+Yüklemeyi tamamlamak için Visual Studio'nun tüm örneklerini kapatın.
+
+=== Uzantıyı Kaldırma
+
+Uzantıyı bilgisayarınızdan kaldırmak için:
+
+. Visual Studio'da, Uzantılar menüsünde Yönetilen Uzantılar'ıtıklatın.
+. Test Uzantısı Paketi'ni seçin ve ardından Kaldır'ıtıklatın. Uzantı paketive uzantılistesi daha sonra kaldırılacak şekilde zamanlanır.
+. Yüklemeyi tamamlamak için Visual Studio'nun tüm örneklerini kapatın.
+
