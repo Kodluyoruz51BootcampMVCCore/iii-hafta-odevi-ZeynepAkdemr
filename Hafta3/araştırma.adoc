@@ -1,0 +1,75 @@
+== Task Nedir? 
+'.NET' framework threading sağlar. Task sınıfı, görevler oluşturmanıza ve bunları eşzamansız olarak çalıştırmanıza olanak tanır. 
+
+Task, yapılması gereken bazı işleri temsil eden bir nesnedir. Task, işin tamamlanıp tamamlanmadığını ve işlemin bir sonuç döndürürse, size sonucu verir.
+Task sınıfı, bir değer döndürmeyen ve genellikle zaman uyumsuz olarak yürütülen tek bir işlemi temsil eder. Task nesneler, ilk olarak .NET Framework 4 ' te tanıtılan görev tabanlı zaman uyumsuz düzenin merkezi bileşenlerinden biridir. Bir Task nesnesi tarafından gerçekleştirilen iş, genellikle ana uygulama iş parçacığı üzerinde zaman uyumsuz olarak değil, bir iş parçacığı havuzu iş parçacığında zaman uyumsuz olarak yürütülebildiğinden, bir görevin durumunu öğrenmek için, Status özelliğini ve IsCanceled, IsCompletedve IsFaulted özelliklerini de kullanabilirsiniz. En yaygın olarak, görevin gerçekleştireceği işi belirtmek için bir lambda ifadesi kullanılır.
+
+image::1.png[]
+
+== Thread Nedir?
+
+'.NET' Framework, sistemde thread-associated ile ilişkili sınıflara sahiptir.Threading alanı. Bir Thread küçük bir çalıştırılabilir talimatlar kümesidir.
+
+image::2.png[]
+
+=== Task'a Neden İhtiyaç Duyulur?
+
+Paralel olarak bir şey yürütmek istediğinizde kullanılabilir. 'Async' ve 'await' anahtar kelimelerini kullanarak bir işte Asenkron uygulama kolaydır.
+
+==== Task Nasıl Yaratılır?
+
+[source,C#]
+----
+static void Main(string[] args) {  
+    Task < string > obTask = Task.Run(() => (  
+        return“ Hello”));  
+    Console.WriteLine(obTask.result);  
+}
+----
+
+=== Thread'e Neden İhtiyaç Duyulur
+
+Uygulamanın aynı anda birkaç görevi gerçekleştirmek için gerekli olduğu zaman geldiğinde.
+
+==== Thread Nasıl Yaratılır?
+
+[source,C#]
+----
+static void Main(string[] args) {  
+    Thread thread = new Thread(new ThreadStart(getMyName));  
+    thread.Start();  
+}  
+public void getMyName() {} 
+----
+
+=== Aralarındaki Fark
+
+. Thread sınıfı, Windows'ta bir 'thread' oluşturmak ve değiştirmek için kullanılır. Task, bazı eşzamansız işlemleri temsil eder ve görevleri eşzamansız ve paralel olarak çalıştırmak için bir dizi API olan 'Task Parallel Library (Görev Paralel Kitaplığı'nın) bir parçasıdır.
+. Task bir sonuç döndürebilir. Bir threadde sonucu döndürmek için doğrudan bir mekanizma yoktur.
+. Task, iptal belirteçleri kullanılarak iptal işlemini destekler. Ancak Thread değil.
+. Bir task'in aynı anda birden çok işlemi olabilir. Thread'lerin aynı anda yalnızca bir görevi olabilir.
+. 'Async' ve 'await' anahtar kelimelerini kullanarak Asenkron'i kolayca uygulayabiliriz.
+. Yeni bir Thread () Thread havuzu ile uğraşmazken; Task, thread havuzunu farklı işler için kullanır.
+. Task, Thread'den daha üst düzey bir kavramdır.
+
+== Project Nedir?
+
+Projeler genellikle yeni bir ürünün tasarımı gibi belirli veya bir kerelik çıktılar vermek için birkaç aşamada ilerler. Projeler, basit olandan (bir müşteri için yerinde ziyaret organize etmek) komplekse (yeni bir uzay roketi inşa etmek) kadar, ancak genellikle bittikten sonra projeyi tekrar etmeden değişebilir.
+
+== Prosses Nedir?
+
+Bir işlem sonucu tekrarlanabilir bir şekilde gerçekleştirir. İyi süreç yönetimi, süreci, zamanında, verimsizliği, verimsizliği veya üçünü de sürekli olarak iyileştirme fırsatlarından en iyi şekilde yararlanmayı içerir. Bir süreçteki koşullu mantık, yol boyunca farklı olayların veya sonuçların, sürecin akışını kesintiye uğratmadan sorunsuz bir şekilde entegre olabileceği anlamına gelir. Bir sürece örnek olarak ofis güvenliğinin farklı bölümleri üzerinde yapılan bir dizi denetim gösterilebilir. Diğer örnekler arasında, her seferinde tüm üslerin uygun şekilde kapsama alınmasını sağlamak için bir işlem kullanan yeni müşteri veya çalışan katılımı sayılabilir.
+
+=== Task, Project Ve Prosses Arasındaki Bağlantı
+
+Görevler, projeler ve süreçler birbiriyle ilişkilidir. Örneğin, bir proje genellikle bireysel görevler dizisine bölünür; her görevin, tamamlanma tarihine uyulması için bir tarih belirlenmektedir. Bir süreç aynı zamanda bir dizi görev olarak da görülebilir. Bununla birlikte, bazı görevlerin yalnızca başlangıçtan sonra bilinebileceği bir projeyle karşılaştırıldığında, bir süreçteki olası görevlerin tümü önceden tanımlanır.
+
+Ayrıca, projelerin kendilerine özgü olmasına rağmen,  her bir projeyi başlatmak için tekrarlanabilir bir süreciniz olabilir (örneğin, “her zaman hedefleri belgeleyin, sonra paydaşları belirleyin, ilk proje tanım toplantısını yapın.” Vb.). bir var belirli tanımlamak için projeyi  işlemi karmaşıktır ve birkaç kişi içermektedir, özellikle yinelenen aktivite veya olay işleme için doğru süreç. İlk görev dizisi tanımı bir kez (proje bölümü) yapılır ve bu şekilde tanımlanan görev dizisi gerektiğinde tekrarlanır (işlem.).
+
+image::3.png[]
+
+== Sonuç Olarak;
+
+Bu görev, proje ve süreç yönetimi kavramlarını kendi faaliyetlerinize uydurmaya yönelik küçük bir uygulama yakında size hangisine ve ne zaman ihtiyacınız olduğunu göstermelidir. Tallyfy ile, belirli bir duruma veya gereksinime görev, proje veya süreç yönetimi uygulamanız gerekip gerekmediğini sistematik olarak belirlemek için bir ön süreç bile tanımlayabilirsiniz. Tallyfy'daki koşullu mantığı uygun yönde dallamak için kullanarak, her seferinde doğru seçimi yaptığınızdan emin olabilirsiniz.
+
+
